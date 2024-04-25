@@ -1,7 +1,13 @@
 @ECHO OFF
+
 PUSHD ..
+
 python -m venv .venv
-.venv\Scripts\Activate.ps1
+
+CALL .venv\Scripts\activate
+
 pip install -r requirements.txt
+
 POPD
+
 @REM PAUSE
