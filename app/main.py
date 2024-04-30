@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
 
 from . import dataloader, start_db
@@ -8,7 +8,7 @@ from .core.config import settings
 
 app = FastAPI()
 
-# Set all CORS enabled origins
+# Set all CORS enabled origins. 
 if settings.BACKEND_CORS_ORIGINS:
     app.add_middleware(
         CORSMiddleware,
@@ -22,10 +22,14 @@ if settings.BACKEND_CORS_ORIGINS:
 
 app.include_router(api_router, prefix=settings.API_V1_STR)
 
-# Initiate the database, create the tables and load the initial data. 
+# Initialize the database, create the tables and load the initial data. 
 start_db.main()
 dataloader.main()
 
-@app.get("/")
+@app.get("/", status_code=status.HTTP_200_OK)
 async def root():
-    return {"message": "Hello World"}
+    return {"Message": "The Review Room API is running. "}
+
+@app.get("/health", status_code=status.HTTP_200_OK)
+async def get_health():
+    return {"Status": "Ok"}
