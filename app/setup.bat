@@ -2,11 +2,14 @@
 
 PUSHD ..
 
-python -m venv .venv
+IF NOT EXIST .venv (
+    @REM Create the virtual environment here.
+    python -m venv .venv
+)
 
 CALL .venv\Scripts\activate
 
-pip install -r requirements.txt
+pip install -r app\requirements.txt
 
 POPD
 

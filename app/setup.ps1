@@ -1,10 +1,13 @@
 pushd ..
 
-python -m venv .venv
+if (-not (Test-Path .venv)) {
+    # Create the virtual environment here.
+    python -m venv .venv
+}
 
 .venv\Scripts\Activate.ps1
 
-pip install -r requirements.txt
+pip install -r app\requirements.txt
 
 popd
 
