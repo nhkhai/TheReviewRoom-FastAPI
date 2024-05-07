@@ -1,6 +1,7 @@
 import uuid
 
 import sqlalchemy
+from app.exceptions.database_exception import DatabaseException
 from app.models.customer import Customer
 from app.repositories.repository_session import RepositorySession
 
@@ -27,5 +28,6 @@ class CustomerRepository:
                             phone_number=customer.phone_number,
                         )
                     )
+
         except sqlalchemy.exc.IntegrityError as e:
-            pass
+            raise DatabaseException(e.orig.args[0])
